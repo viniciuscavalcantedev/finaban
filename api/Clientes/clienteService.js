@@ -1,5 +1,6 @@
 const Cliente = require('./cliente')
 const Obrigacao = require('../Obrigacoes/obrigacao')
+const Pendencia = require('../Pendencias/pendencia')
 
 
 Cliente.methods(['get', 'post'])
@@ -24,19 +25,26 @@ function parseErrors(nodeRestfulErrors) {
 
 Cliente.route('novo', function(req, res, next)  {
     Cliente.collection.insert(req.body, function(){
-    geraPendencia(req.body.regime)
+      geraPendencia(req.body)
     })
 })
 
-function geraPendencia(regime){
+function geraPendencia(empresa){
   Obrigacao.find({"regime":regime}, function(err, obrigacao){
     for(var i = 0; i < obrigacao.length; i++){
+      data = new Date
       pendencia = {
-
+        "empresaFantasia": empresa.nomeFantasia,
+        "empresaRazaoSocial": empresa.nomeRazaoSocial,
+        "entrega": obrigacao.dia + "/" + data.getMonth() + "/" + data.getFullYear(),
+        "obrigação": obrigacao.nome,
+        "regime":  obrigacao.regime,
+        "situacao": "Pendente"
       }
-      Cliente.collection.insert(pendencia, function(){
-        geraPendencia(req.body.regime)
-    })
+      
+      Pendencia.collection.insert(pendencia, function(err, obrigacao){
+        
+      })
     }
   })
 }
