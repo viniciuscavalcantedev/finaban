@@ -13,7 +13,8 @@ const clienteSchema = new mongoose.Schema({
     uf: { type: String},
     cep: { type: String},
     telefone: { type: String},
-    email: { type: String}
+    email: { type: String},
+    regime: { type: String}
 },{ versionKey: false})
 
 module.exports = restful.model('Cliente', clienteSchema)

@@ -1,4 +1,4 @@
-const Obrigacao = require('./cliente')
+const Obrigacao = require('./obrigacao')
 
 Obrigacao.methods(['get', 'post'])
 Obrigacao.updateOptions({new: true, rumValidators: true})
@@ -27,6 +27,12 @@ Obrigacao.route('count', function(req, res, next) {
     } else {
       res.json({value})
     }
+  })
+})
+
+Obrigacao.route('lista', function(req, res, next) {
+  Obrigacao.find({"regime":"Simples Nacional"}, function(err, obrigacao){
+    res.json({obrigacao});
   })
 })
 

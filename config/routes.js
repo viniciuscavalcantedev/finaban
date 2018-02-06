@@ -6,4 +6,7 @@ module.exports = function(server){
 
     const clienteService = require('../api/Clientes/clienteService')
     clienteService.register(router, '/cliente')
+
+    const obrigacaoService = require('../api/Obrigacoes/obrigacaoService')
+    obrigacaoService.register(router, '/obrigacao')
 }

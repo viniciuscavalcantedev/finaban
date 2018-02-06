@@ -22,26 +22,37 @@ function parseErrors(nodeRestfulErrors) {
   return errors
 }
 
-Cliente.route('novo', function(req, res, next) {
- 
-  /*Cliente.count(function(error, value) {
-    if(error) {
-      res.status(500).json({errors: [error]})
-    } else {
-      //res.json({value})
-    }
-  })*/
+Cliente.route('novo', function(req, res, next)  {
+    Cliente.collection.insert(req.body, function(){
+    geraPendencia(req.body.regime)
+    })
 })
 
-Cliente.route('obrigacao', function(req, res, next) {
-    Obrigacao.count(function(error, value) {
+function geraPendencia(regime){
+  Obrigacao.find({"regime":regime}, function(err, obrigacao){
+    for(var i = 0; i < obrigacao.length; i++){
+      pendencia = {
+
+      }
+      Cliente.collection.insert(pendencia, function(){
+        geraPendencia(req.body.regime)
+    })
+    }
+  })
+}
+
+
+module.exports = Cliente
+
+
+/*
+
+Obrigacao.count(function(error, value) {
     if(error) {
       res.status(500).json({errors: [error]})
     } else {
       res.json({value})
     }
   })
-})
 
-
-module.exports = Cliente
+*/
