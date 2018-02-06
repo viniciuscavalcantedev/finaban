@@ -30,15 +30,15 @@ Cliente.route('novo', function(req, res, next)  {
 })
 
 function geraPendencia(empresa){
-  Obrigacao.find({"regime":regime}, function(err, obrigacao){
+  Obrigacao.find({"regime":empresa.regime}, function(err, obrigacao){
     for(var i = 0; i < obrigacao.length; i++){
       data = new Date
       pendencia = {
         "empresaFantasia": empresa.nomeFantasia,
         "empresaRazaoSocial": empresa.nomeRazaoSocial,
-        "entrega": obrigacao.dia + "/" + data.getMonth() + "/" + data.getFullYear(),
-        "obrigação": obrigacao.nome,
-        "regime":  obrigacao.regime,
+        "entrega": obrigacao[i].dia + "/" + data.getMonth() + "/" + data.getFullYear(),
+        "obrigação": obrigacao[i].nome,
+        "regime":  obrigacao[i].regime,
         "situacao": "Pendente"
       }
       
